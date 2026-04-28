@@ -1,13 +1,13 @@
 # 🚀 SPRINT 1 — Setup + Modelado Base
 ## 🎯 Objetivo
 Tener:
-*Proyecto Django funcionando
-*App marketplace
-*Modelos con relaciones:
+* Proyecto Django funcionando
+* App marketplace
+* Modelos con relaciones:
     - 1:N → Usuario → Producto
     - N:M → Producto ↔ Categoría
     - N:M → Carrito ↔ Producto (con CartItem)
-*Admin operativo
+* Admin operativo
 
 ## 1 Crear proyecto en django
 ```bash
