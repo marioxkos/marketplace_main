@@ -2,7 +2,7 @@
 ## 🎯 Objetivo
 Tener:
 * Proyecto Django funcionando
-* App marketplace
+* App store (tienda)
 * Modelos con relaciones:
     - 1:N → Usuario → Producto
     - N:M → Producto ↔ Categoría
