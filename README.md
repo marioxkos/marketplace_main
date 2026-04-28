@@ -31,7 +31,7 @@ AUTH_USER_MODEL = 'marketplace.User'
 
 ## 3 MODELOS (CLAVE DEL PROYECTO)
 Diseño de la Base De Datos Relacional en Diagrama Entidad-Relacion
-![Diagrama Entidad-Relacion](Diagrama_Entidad_Relacion.png)
+![Diagrama Entidad-Relacion](https://github.com/jcromerohdz/marketplace_main_2026/blob/main/Diagrama_Entidad_Ralacion.png)
 📁 marketplace/models.py
 ```python
 import uuid
