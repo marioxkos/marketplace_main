@@ -424,8 +424,8 @@ python manage.py runserver
 5. Logout desde navbar
 
 ✅ Resultado del Sprint 2
-✔ Autenticación completa
-✔ UI base profesional con Bootstrap
-✔ Navbar dinámica
-✔ Listado de productos
-✔ Estructura lista para escalar
+- ✔ Autenticación completa
+- ✔ UI base profesional con Bootstrap
+- ✔ Navbar dinámica
+- ✔ Listado de productos
+- ✔ Estructura lista para escalar
