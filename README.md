@@ -429,3 +429,223 @@ python manage.py runserver
 - ✔ Navbar dinámica
 - ✔ Listado de productos
 - ✔ Estructura lista para escalar
+
+# 🚀 SPRINT 3 — Gestión de Productos + Dashboard
+## 🎯 Objetivo
+* CRUD completo de productos
+* Dashboard para vendedores
+* Control de permisos (solo dueño edita)
+* UI tipo panel (estilo Amazon Seller)
+
+## 🧱 1. Actualizar URLs
+📁 store/urls.py
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+
+    # Auth
+    path('register/', views.register, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+
+    # Dashboard
+    path('dashboard/', views.dashboard, name='dashboard'),
+
+    # Productos CRUD
+    path('products/create/', views.product_create, name='product_create'),
+    path('products/<uuid:pk>/edit/', views.product_update, name='product_update'),
+    path('products/<uuid:pk>/delete/', views.product_delete, name='product_delete'),
+]
+```
+
+## 🧠 2. Formulario de Producto
+📁 store/forms.py crear este archivo en la aplicación store
+```python
+from django import forms
+from .models import Product
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'stock', 'categories']
+        widgets = {
+            'categories': forms.CheckboxSelectMultiple()
+        }
+```
+
+## 🧠 3. Vistas-Views (LÓGICA DE NEGOCIO)
+📁 store/views.py
+```python
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
+from .forms import ProductForm
+from .models import Product
+
+# =========================
+# 📊 Dashboard
+# =========================
+@login_required
+def dashboard(request):
+    if not request.user.is_seller:
+        return HttpResponseForbidden("No tienes permisos")
+
+    products = Product.objects.filter(owner=request.user)
+
+    return render(request, 'store/dashboard.html', {
+        'products': products
+    })
+
+
+# =========================
+# ➕ Crear producto
+# =========================
+@login_required
+def product_create(request):
+    if not request.user.is_seller:
+        return HttpResponseForbidden("Solo vendedores")
+
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid():
+        product = form.save(commit=False)
+        product.owner = request.user
+        product.save()
+        form.save_m2m()
+
+        return redirect('dashboard')
+
+    return render(request, 'store/product_form.html', {'form': form})
+
+
+# =========================
+# ✏️ Editar producto
+# =========================
+@login_required
+def product_update(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if product.owner != request.user:
+        return HttpResponseForbidden("No puedes editar este producto")
+
+    form = ProductForm(request.POST or None, instance=product)
+
+    if form.is_valid():
+        form.save()
+        return redirect('dashboard')
+
+    return render(request, 'store/product_form.html', {'form': form})
+
+
+# =========================
+# 🗑️ Eliminar producto
+# =========================
+@login_required
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if product.owner != request.user:
+        return HttpResponseForbidden("No puedes eliminar este producto")
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('dashboard')
+
+    return render(request, 'store/product_confirm_delete.html', {'product': product})
+```
+
+## 🎨 4. Dashboard UI (tipo Amazon simple)
+📁 templates/store/dashboard.html crear este template en la runta indicada.
+```html
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Mi Dashboard</h2>
+    <a href="{% url 'product_create' %}" class="btn btn-success">+ Nuevo Producto</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>$ {{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>
+                <a href="{% url 'product_update' product.id %}" class="btn btn-warning btn-sm">Editar</a>
+
+                <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
+```
+## 🧾 5. Formulario UI
+📁 templates/store/product_form.html crear este template en la runta indicada.
+```html
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<h2>Producto</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button class="btn btn-primary">Guardar</button>
+</form>
+
+{% endblock %}
+```
+
+## ⚠️ 6. Confirmación de eliminación de producto
+📁 templates/store/product_confirm_delete.html crear este template en la runta indicada.
+```html
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+
+<h3>¿Eliminar "{{ product.name }}"?</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    <button class="btn btn-danger">Sí, eliminar</button>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}
+```
+## 🎯 7. Mejora UX en Navbar
+📁 En templates/store/product_confirm_delete.html agrega lo siguiente a la barra de navegación.
+```html
+{% if user.is_authenticated and user.is_seller %}
+    <a href="{% url 'dashboard' %}" class="btn btn-warning btn-sm me-2">Dashboard</a>
+{% endif %}
+```
+
+## 🧪 8. Flujo de prueba
+1. Crear usuario vendedor (is_seller = True)
+2. Ir a /dashboard/
+3. Crear producto
+4. Editar producto
+5. Eliminar producto
+6. Ver reflejado en home
