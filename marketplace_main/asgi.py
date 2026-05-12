@@ -14,7 +14,11 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'marketplace_main.settings')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 application = get_asgi_application()
 =======
 application = get_asgi_application()
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+application = get_asgi_application()
+>>>>>>> origen/main

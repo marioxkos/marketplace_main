@@ -14,7 +14,11 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'marketplace_main.settings')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 application = get_wsgi_application()
 =======
 application = get_wsgi_application()
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+application = get_wsgi_application()
+>>>>>>> origen/main

@@ -21,10 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 <<<<<<< HEAD
+<<<<<<< HEAD
 SECRET_KEY = 'django-insecure-t%4)uz_+as#yi)_(lusxt*d!7944e$h03z-sz2-7l=z5kg(ynk'
 =======
 SECRET_KEY = 'django-insecure-=s(9t^3)go)coju&6k%71f_0(971w2b&(4xp(mbxgp6ax-g9gg'
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+SECRET_KEY = 'django-insecure-t%4)uz_+as#yi)_(lusxt*d!7944e$h03z-sz2-7l=z5kg(ynk'
+>>>>>>> origen/main
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,10 +46,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     'store',
 =======
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+
+    'store',
+>>>>>>> origen/main
 ]
 
 MIDDLEWARE = [
@@ -59,10 +68,15 @@ MIDDLEWARE = [
 ]
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 AUTH_USER_MODEL = 'store.User'
 
 =======
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+AUTH_USER_MODEL = 'store.User'
+
+>>>>>>> origen/main
 ROOT_URLCONF = 'marketplace_main.urls'
 
 TEMPLATES = [
@@ -130,16 +144,25 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 <<<<<<< HEAD
+<<<<<<< HEAD
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 =======
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+>>>>>>> origen/main
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 =======
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 >>>>>>> 0ace29bab589eee8093e09f15fbbd24c914a2197
+=======
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+>>>>>>> origen/main
